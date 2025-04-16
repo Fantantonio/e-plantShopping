@@ -229,12 +229,6 @@ function ProductList({ onHomeClick }) {
         alignIems: 'center',
         fontSize: '20px',
     }
-    const styleObjUl = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '1100px',
-    }
     const styleA = {
         color: 'white',
         fontSize: '30px',
@@ -285,7 +279,7 @@ function ProductList({ onHomeClick }) {
                         </a>
                     </div>
                 </div>
-                <div style={styleObjUl}>
+                <div className="navbar-second-row">
                     <div>
                         <a href="#" onClick={(e) => handlePlantsClick(e)} style={styleA}>Plants</a>
                     </div>
@@ -308,14 +302,16 @@ function ProductList({ onHomeClick }) {
                 <div className="product-grid">
                     {plantsArray.map((category, index) => (
                         <div key={index}>
-                            <h1><div>{category.category}</div></h1>
+                            <h1>
+                                <div className="category-title">{category.category}</div>
+                            </h1>
                             <div className="product-list">
                                 {category.plants.map((plant, plantIndex) => (
                                     <div className="product-card" key={plantIndex}>
-                                        <img className="product-image" src={plant.image} alt={plant.name} />
                                         <div className="product-title">{plant.name}</div>
+                                        <img className="product-image" src={plant.image} alt={plant.name} />
+                                        <p className="product-cost">{plant.cost}</p>
                                         <p className="product-description">{plant.description}</p>
-                                        <p className="product-cost">Cost: {plant.cost}</p>
                                         <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
                                     </div>
                                 ))}
