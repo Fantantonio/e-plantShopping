@@ -106,6 +106,16 @@
   margin-top: 40px;
 }
 
+.checkout-message {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: green;
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px green solid;
+}
+
 @media (max-width: 768px) {
   .cart-item {
     flex-direction: column; /* Change flex direction to stack items vertically */

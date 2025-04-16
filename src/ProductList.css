@@ -242,7 +242,15 @@ body {
 .product-button:hover {
     background-color: #45a049;
 }
-  
+
+.product-button:disabled {
+    background-color: #808080;
+}
+.product-button:disabled:hover {
+    background-color: #808080;
+}
+
+
 .product-button.added-to-cart {
     background-color: grey; /* Grey when product is added */
 }

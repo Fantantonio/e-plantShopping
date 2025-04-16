@@ -4,8 +4,12 @@ import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
+  const [showCheckoutMessage, setShowCheckoutMessage] = React.useState(false);
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.items);
+  const totalUniqueItems = cartItems.length;
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
@@ -21,7 +25,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleCheckoutShopping = (e) => {
-    alert('Functionality to be added for future reference');
+    setShowCheckoutMessage(true);
   };
 
   const handleIncrement = (item) => {
@@ -47,6 +51,8 @@ const CartItem = ({ onContinueShopping }) => {
 
   return (
     <div className="cart-container">
+      <h2 style={{ color: 'black' }}>Total Unique Items: {totalUniqueItems}</h2>
+      <h2 style={{ color: 'black' }}>Total Items: {totalItems}</h2>
       <h2 style={{ color: 'black' }}>Total Cart Amount: ${calculateTotalAmount()}</h2>
       <div>
         {cart.map(item => (
@@ -54,7 +60,7 @@ const CartItem = ({ onContinueShopping }) => {
             <img className="cart-item-image" src={item.image} alt={item.name} />
             <div className="cart-item-details">
               <div className="cart-item-name">{item.name}</div>
-              <div className="cart-item-cost">{item.cost}</div>
+              <div className="cart-item-cost">Unit price: {item.cost}</div>
               <div className="cart-item-quantity">
                 <button className="cart-item-button cart-item-button-dec" onClick={() => handleDecrement(item)}>-</button>
                 <span className="cart-item-quantity-value">{item.quantity}</span>
@@ -66,11 +72,15 @@ const CartItem = ({ onContinueShopping }) => {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'></div>
+      {showCheckoutMessage && (
+        <div className="checkout-message">
+          Checkout functionality to be added in the future.
+        </div>
+      )}
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={(e) => handleCheckoutShopping(e)}>Checkout</button>
       </div>
     </div>
   );

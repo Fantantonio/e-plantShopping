@@ -5,13 +5,28 @@ import CartItem from './CartItem';
 import { addItem, getTotalItems } from './CartSlice';
 
 
-function ProductList({ onHomeClick }) {
+function ProductList({ onHomeClick }) {  
+
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    
+    const [disabledButtons, setDisabledButtons] = React.useState({});
+    React.useEffect(() => {
+        setDisabledButtons(prev => {
+            const updated = { ...prev };
+            Object.keys(updated).forEach(productName => {
+                const stillInCart = cartItems.find(item => item.name === productName);
+                if (!stillInCart) {
+                    updated[productName] = false; // re-enable button
+                }
+            });
+            return updated;
+        });
+    }, [cartItems]);
 
     const plantsArray = [
         {
@@ -234,6 +249,7 @@ function ProductList({ onHomeClick }) {
         fontSize: '30px',
         textDecoration: 'none',
     }
+    
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
@@ -241,6 +257,7 @@ function ProductList({ onHomeClick }) {
             ...prevState,
             [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
         }));
+        setDisabledButtons(prev => ({ ...prev, [product.name]: true }));
     };
 
     const handleHomeClick = (e) => {
@@ -312,7 +329,10 @@ function ProductList({ onHomeClick }) {
                                         <img className="product-image" src={plant.image} alt={plant.name} />
                                         <p className="product-cost">{plant.cost}</p>
                                         <p className="product-description">{plant.description}</p>
-                                        <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                                        <button className="product-button" onClick={() => handleAddToCart(plant)} disabled={disabledButtons[plant.name]}>
+                                            {disabledButtons[plant.name] ? "Added" : "Add to Cart"}
+                                        </button>
+
                                     </div>
                                 ))}
                             </div>
