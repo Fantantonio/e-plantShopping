@@ -1,4 +1,4 @@
-⚠️ Link to the final project: [DEMO](https://fantantonio.github.io/e-plantShopping/)
+⚠️ Link to the final project: [DEMO](https://fantantonio.github.io/shoppingreact/)
 
 # Final Project Overview
 
